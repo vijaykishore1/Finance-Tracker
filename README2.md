@@ -7,5 +7,4 @@ trial. yet again
 added this just to fuck with the existing branch and importantly test out merge conflicts
 =======
 ## this change is done on the main branch
-hahaha what do you do now. this is a merge conflict right here
->>>>>>> main
+hahaha what do you do now. this is a merge conflict right here main
