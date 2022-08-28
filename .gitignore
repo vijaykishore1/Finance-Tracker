@@ -1,7 +1,7 @@
 # Byte-compiled / optimized / DLL files
 pycache/
 *.py[cod]
-
+.idea/*
 # C extensions
 *.so
 
