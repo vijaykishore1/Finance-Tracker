@@ -1,4 +1,5 @@
 import sqlite3
+from expense_manager.constants.db_constants import DB_PATH
 
 class DbUtils:
     def __init__(
@@ -10,7 +11,7 @@ class DbUtils:
     def connect_connection(
         self,
     ):
-        self.con = sqlite3.connect(database="ExpenseManager.db")
+        self.con = sqlite3.connect(database=DB_PATH)
 
     def run_query(
         self,
@@ -81,25 +82,14 @@ class DbUtils:
 
 if __name__ == "__main__":
     conn_obj = DbUtils()
-    # conn_obj.insert_into_table(table_name="user",values="1, 'Shrinath' ,'982766638'")
-    # conn_obj.update_in_table(table_name="user",column_name="name",value="VijayKishore",where_clause="id = 1")
-    # conn_obj.delete_from_table(table_name="user",where_clause="id = 2")
-    # conn_obj.insert_into_table(table_name="user",values="3, 'Feliks' ,'782766638'")
-    # conn_obj.insert_into_table(table_name="user", values="2, 'Vijay' ,'9827666982'")
-    # conn_obj.insert_into_table(table_name="login", values="'vijaykishore','Vijay@123'")
-    # conn_obj.insert_into_table(table_name="user",values=["1, '"])
     print(
         conn_obj.select_from_table(
-            # column_name="*",
             table_name="user"
-            # where_clause="name = 'Vijay Kishore'",
         )
     )
     print(
         conn_obj.select_from_table(
-            # column_name="*",
             table_name="login"
-            # where_clause="name = 'Vijay Kishore'",
         )
     )
     conn_obj.close_connection()
