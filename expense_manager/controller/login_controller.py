@@ -19,15 +19,14 @@ class LoginController:
     def validate_login(self, username, password):
         obj = DbUtils()
         if not self.is_username_exist:
-            return "username does not exist"  # create a variable later in exception.py in constants called USERNAME_DOES_NOT_EXIST_ERROR
-        if self.is_username_exist:
-            pwd_to_check = obj.select_from_table(column_name="password", table_name=LOGIN_TABLE, where_clause=f"username = '{username}'" )
-            if pwd_to_check == password:
-                return PASSWORD_VALIDATED
-            else:
-                return PASSWORD_NOT_VALIDATED
+            return USERNAME_DOES_NOT_EXIST_ERROR   # create a variable later in exception.py in constants called USERNAME_DOES_NOT_EXIST_ERROR
+        pwd_to_check = obj.select_from_table(column_name="password", table_name=LOGIN_TABLE, where_clause=f"username = '{username}'")
+        if pwd_to_check:
+            return PASSWORD_VALIDATED
+        else:
+            return PASSWORD_NOT_VALIDATED
 
 
 if __name__ == '__main__':
-    loginobject = LoginController()
-    print(loginobject.validate_login(username="vijaykishore", password="Vijay@123"))
+    login_object = LoginController()
+    print(login_object.validate_login(username="vijaykishore", password="Vijay@123"))
