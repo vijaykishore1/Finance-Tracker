@@ -1,6 +1,5 @@
 import sqlite3
 
-
 class DbUtils:
     def __init__(
         self,
@@ -51,8 +50,12 @@ class DbUtils:
             query = f"update {table_name} set {list_column[i]} = '{list_value[i]}' where {check_column} = {check_value}"
             self.run_query(input_str=query)
         print("Table updated successfully")
+        # print("Record inserted successfully")
 
-    # def update_in_table(self, table_name):
+    def update_in_table(self, table_name, column_name, value, where_clause):
+        query = f"update {table_name} set {column_name} = '{value}' where {where_clause}"
+        self.run_query(input_str=query)
+        print("Table updated successfully")
 
     def select_from_table(
         self,
@@ -66,8 +69,10 @@ class DbUtils:
         res = self.run_query(input_str=query)
         return res.fetchall()
 
-        # query = f"update {table_name} set"
-
+    def delete_from_table(self,table_name,where_clause):
+        query = f"delete from {table_name} where {where_clause}"
+        self.run_query(input_str=query)
+        print("Record deleted successfully")
     def close_connection(
         self,
     ):
@@ -76,14 +81,17 @@ class DbUtils:
 
 if __name__ == "__main__":
     conn_obj = DbUtils()
-    # conn_obj.create_table(table_name="user")
-    # conn_obj.insert_into_table(table_name="user",values="3, 'drishya' ,'982766638'")
-    # conn_obj.close_connection()
-    # conn_obj.update_in_table(table_name="user")
+    # conn_obj.insert_into_table(table_name="user",values="1, 'Shrinath' ,'982766638'")
+    # conn_obj.update_in_table(table_name="user",column_name="name",value="VijayKishore",where_clause="id = 1")
+    # conn_obj.delete_from_table(table_name="user",where_clause="id = 2")
+    # conn_obj.insert_into_table(table_name="user",values="1, 'Shrinath' ,'982766638'")
+    # conn_obj.insert_into_table(table_name="user", values="2, 'Vijay' ,'9827666982'")
+    conn_obj.insert_into_table(table_name="login", values="'vijaykishore','Vijay@123'")
+    # conn_obj.insert_into_table(table_name="user",values=["1, '"])
     print(
         conn_obj.select_from_table(
             column_name="*",
-            table_name="user",
+            table_name="login",
             # where_clause="name = 'Vijay Kishore'",
         )
     )

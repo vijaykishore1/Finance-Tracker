@@ -50,8 +50,8 @@ class DatabaseConnection:
     ):
         query = (
             f"Create table login ("
-            "id INT primary key not null,"
-            "username TEXT not null,"
+            # "id INT primary key not null,"
+            "username TEXT primary key not null,"
             "password TEXT not null"
             ");"
         )
