@@ -1,3 +1,6 @@
 USERNAME_DOES_NOT_EXIST_ERROR = "username does not exist"
 PASSWORD_VALIDATED = "Password is correct. Logging you in"
 PASSWORD_NOT_VALIDATED = "Password is incorrect. Please try again"
+USERNAME_ALREADY_EXISTS_ERROR = "Username already exists. Please try a different username"
+PASSWORDS_DONT_MATCH_ERROR = "Passwords don't match. Please type password again"
+REGISTRATION_SUCCESS = "Registration success. You can now start using Expense Manager"
