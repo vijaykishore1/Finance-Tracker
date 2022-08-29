@@ -74,6 +74,17 @@ class DbUtils:
         query = f"delete from {table_name} where {where_clause}"
         self.run_query(input_str=query)
         print("Record deleted successfully")
+
+    def id_generator(self,table_name):
+        query = f"select max(id) from {table_name}"
+        query2 = f"select count(id) from {table_name}"
+        res2 = self.run_query(input_str=query2)
+        res = self.run_query(input_str=query)
+        id = res2.fetchall()[0][0]
+        id2 = res.fetchall()[0][0]
+        if id > 1:
+            return id2 + 1
+        return id + 1
     def close_connection(
         self,
     ):
@@ -82,8 +93,8 @@ class DbUtils:
 
 if __name__ == "__main__":
     conn_obj = DbUtils()
-    print(
-        conn_obj.select_from_table(
+    print(conn_obj.id_generator(table_name="user"))
+    print(conn_obj.select_from_table(
             table_name="user"
         )
     )
