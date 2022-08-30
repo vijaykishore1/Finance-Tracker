@@ -28,7 +28,7 @@ def registration_form():
     response = RegistrationController().registration(username=reg_data["username"], password=reg_data["password"],confirm_password=reg_data["confirm_password"],name=reg_data["name"],phone_number=reg_data["phone_number"])
     return response
 @app.route("/bankdetails", methods=["POST"])
-def bank_details():
+def bank_details(amount = 0):
     bank_data = json.loads(request.data.decode("UTF-8"))
     assert "bank_name" in bank_data #TODO
     response = BankController().bank_details(id=bank_data["id"],bank_name=bank_data["bank_name"],amount=bank_data["amount"])

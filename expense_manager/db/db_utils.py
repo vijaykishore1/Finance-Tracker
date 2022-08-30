@@ -110,9 +110,15 @@ if __name__ == "__main__":
     conn_obj = DbUtils()
     # conn_obj.delete_from_table(table_name="income",where_clause='income_id = 1')
     # conn_obj.delete_from_table(table_name="login")
-    conn_obj.delete_from_table(table_name="investments")
+    # conn_obj.delete_from_table(table_name="bank_account")
+    # conn_obj.delete_from_table(table_name="categories")
+    # conn_obj.delete_from_table(table_name="income")
+    # conn_obj.delete_from_table(table_name="expenses")
+    # conn_obj.delete_from_table(table_name="bank_account")
     # conn_obj.drop_table(table_name="investments")
-    conn_obj.update_in_table(table_name="bank_account",column_name="amount",value=9500,where_clause="id = 1 and bank_name = 'AXIS'")
+    # conn_obj.drop_table(table_name="income")
+    # conn_obj.drop_table(table_name="expenses")
+    # conn_obj.update_in_table(table_name="bank_account",column_name="amount",value=115000,where_clause="id = 1 and bank_name = 'AXIS'")
     print(
         conn_obj.select_from_table(
             table_name="user"
