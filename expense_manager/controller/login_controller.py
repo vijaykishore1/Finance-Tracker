@@ -1,7 +1,8 @@
 from expense_manager.db.db_utils import DbUtils
 from expense_manager.constants.table_names import LOGIN_TABLE
-from expense_manager.constants.exception_constants import PASSWORD_VALIDATED, PASSWORD_NOT_VALIDATED, \
+from expense_manager.constants.exception_constants import PASSWORD_NOT_VALIDATED, \
     USERNAME_DOES_NOT_EXIST_ERROR
+from expense_manager.constants.success_constants import PASSWORD_VALIDATED
 
 
 class LoginController:
@@ -32,6 +33,6 @@ class LoginController:
 
 if __name__ == '__main__':
     login_object = LoginController()
-    print(login_object.validate_login(username="vijaykishore", password="Vijay@123"))
-    utils_obj = DbUtils()
-    utils_obj.select_from_table(table_name="login")
+    print(login_object.validate_login(username="priyav", password="priyav123"))
+    # utils_obj = DbUtils()
+    # utils_obj.select_from_table(table_name="login")

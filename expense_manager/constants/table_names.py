@@ -1,2 +1,7 @@
 LOGIN_TABLE = "login"
 USER_TABLE = "user"
+BANK_ACCOUNT_TABLE = "bank_account"
+CATEGORY_TABLE = "categories"
+INCOME_TABLE = "income"
+EXPENSES_TABLE = "expenses"
+INVESTMENTS_TABLE = "investments"

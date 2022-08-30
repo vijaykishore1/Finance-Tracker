@@ -1,0 +1,7 @@
+PASSWORD_VALIDATED = "Password is correct. Logging you in"
+REGISTRATION_SUCCESS = "Registration is complete. You can now use Expense Manager"
+BANK_DETAILS_ADDED_SUCCESSFULLY = "Bank details have been updated"
+CATEGORY_ADDED_SUCCESSFULLY = "Category table has been updated successfully"
+INCOME_ADDED_SUCCESSFULLY = "Income table has been updated successfully"
+EXPENSES_ADDED_SUCCESSFULLY = "Expenses table has been updated successfully"
+INVESTMENTS_ADDED_SUCCESSFULLY = "Investments table has been updated successfully"

@@ -26,14 +26,18 @@ class DbUtils:
         self.con.commit()
         return cur
 
-    def insert_into_table(
-        self,
-        table_name,
-        values,
-    ):
-        query = f"insert into {table_name} values ({values})"
+    # def insert_into_table(
+    #     self,
+    #     table_name,
+    #     values,
+    # ):
+    #     query = f"insert into {table_name} values ({values})"
+    #     self.run_query(input_str=query)
+    #     print("Record inserted successfully")
+    def insert_into_table(self,table_name,column_names,values):
+        query = f"insert into {table_name} ({column_names}) values ({values})"
         self.run_query(input_str=query)
-        print("Record inserted successfully")
+        print("Values inserted successfully")
 
     def update_in_table_interactive(
         self,
@@ -53,15 +57,17 @@ class DbUtils:
         print("Table updated successfully")
         # print("Record inserted successfully")
 
-    def update_in_table(self, table_name, column_name, value, where_clause):
-        query = f"update {table_name} set {column_name} = '{value}' where {where_clause}"
+    def update_in_table(self, table_name, column_name, value, where_clause = ""):
+        query = f"update {table_name} set {column_name} = '{value}'"
+        if where_clause:
+            query += f" where {where_clause}"
         self.run_query(input_str=query)
         print("Table updated successfully")
 
     def select_from_table(
         self,
+        table_name,
         column_name = "*",
-        table_name = "",
         where_clause = ""
     ):
         query = f"select {column_name} from {table_name}"
@@ -70,24 +76,43 @@ class DbUtils:
         res = self.run_query(input_str=query)
         return res.fetchall()
 
-    def delete_from_table(self,table_name,where_clause):
-        query = f"delete from {table_name} where {where_clause}"
+    def delete_from_table(self,table_name,where_clause = ""):
+        query = f"delete from {table_name}"
+        if where_clause:
+            query += f" where {where_clause}"
         self.run_query(input_str=query)
         print("Record deleted successfully")
 
-    def id_generator(self,table_name):
-        query = f"select MAX(id) from {table_name}"
-        res = self.run_query(input_str=query)
-        return res.fetchall()[0][0]
+    # def id_generator(self,table_name,where_clause = ""):
+    #     query = f"select MAX(id) from {table_name}"
+    #     if where_clause:
+    #         query += f" where {where_clause}"
+    #     res = self.run_query(input_str=query)
+    #     return res.fetchall()[0][0]
+
+    def is_value_match(self, value1, value2):
+        if value1 != value2:
+            return False
+        else:
+            return True
     def close_connection(
         self,
     ):
         self.con.close()
 
+    def drop_table(self,table_name):        #BE CAREFUL WITH THIS METHOD AND USE IT ONLY FOR IMPORTANT OPERATIONS
+        query = f"drop table {table_name}"
+        self.run_query(input_str=query)
+        print("Table deleted successfully")
+
 
 if __name__ == "__main__":
     conn_obj = DbUtils()
-    # conn_obj.delete_from_table(table_name="user",where_clause='id = 5')
+    # conn_obj.delete_from_table(table_name="income",where_clause='income_id = 1')
+    # conn_obj.delete_from_table(table_name="login")
+    conn_obj.delete_from_table(table_name="investments")
+    # conn_obj.drop_table(table_name="investments")
+    conn_obj.update_in_table(table_name="bank_account",column_name="amount",value=9500,where_clause="id = 1 and bank_name = 'AXIS'")
     print(
         conn_obj.select_from_table(
             table_name="user"
@@ -98,5 +123,31 @@ if __name__ == "__main__":
             table_name="login"
         )
     )
-    print(conn_obj.id_generator(table_name="user"))
+    print(
+        conn_obj.select_from_table(
+            table_name="bank_account"
+        )
+    )
+    print(
+        conn_obj.select_from_table(
+            table_name="categories"
+        )
+    )
+    print(
+        conn_obj.select_from_table(
+            table_name="income"
+        )
+    )
+    print(
+        conn_obj.select_from_table(
+            table_name="expenses"
+        )
+    )
+    print(
+        conn_obj.select_from_table(
+            table_name="investments"
+        )
+    )
+
+    # print(conn_obj.id_generator(table_name="user"))
     conn_obj.close_connection()

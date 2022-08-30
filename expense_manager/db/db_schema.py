@@ -6,13 +6,13 @@ class DatabaseConnection:
     ):
         self.con = None
         self.connect_connection()
+        self.create_table_investments()
+        self.create_table_expenses()
+        self.create_table_income()
+        self.create_table_categories()
         self.create_table_user()
         self.create_table_login()
         self.create_table_bank_account()
-        self.create_table_category()
-        self.create_table_income()
-        self.create_table_expenses()
-        self.create_table_investments()
     def connect_connection(
         self,
     ):
@@ -36,9 +36,10 @@ class DatabaseConnection:
     ):
         query = (
             f"Create table user ("
-            "id INT primary key not null,"
+            "id integer primary key autoincrement,"
             "name TEXT not null,"
             "phone_number TEXT not null"
+            # "primary key (id)"
             ");"
         )
         self.run_query(input_str=query)
@@ -51,7 +52,8 @@ class DatabaseConnection:
         query = (
             f"Create table login ("
             # "id INT primary key not null,"
-            "username TEXT primary key not null,"
+            "id integer primary key autoincrement,"
+            "username TEXT not null,"
             "password TEXT not null"
             ");"
         )
@@ -64,7 +66,7 @@ class DatabaseConnection:
     ):
         query = (
             f"Create table bank_account ("
-            "bank_id INT primary key not null,"
+            "bank_id integer primary key autoincrement,"
             "id INT not null,"
             "bank_name TEXT not null,"
             "amount INT not null"
@@ -73,14 +75,14 @@ class DatabaseConnection:
         self.run_query(input_str=query)
         print("Table created successfully")
 
-    def create_table_category(
+    def create_table_categories(
             self,
             # table_name,
     ):
         query = (
-            f"Create table category ("
-            "category_id INT primary key not null,"
-            "id INT not null,"
+            f"Create table categories ("
+            "category_id integer primary key autoincrement,"
+            # "id INT not null,"
             "category TEXT not null,"
             "sub_category TEXT not null"
             ");"
@@ -94,13 +96,13 @@ class DatabaseConnection:
     ):
         query = (
             f"Create table income ("
-            "income_id INT primary key not null,"
-            "bank_id INT not null,"
+            "income_id integer primary key autoincrement,"
+            "bank_name TEXT not null,"
             "id INT not null,"
             "source TEXT not null,"
             "amount INT not null,"
-            "date datetime,"
-            "description TEXT not null"
+            "date datetime not null,"
+            "description TEXT"
             ");"
         )
         self.run_query(input_str=query)
@@ -112,8 +114,8 @@ class DatabaseConnection:
     ):
         query = (
             f"Create table expenses ("
-            "expense_id INT primary key not null,"
-            "bank_id INT not null,"
+            "expense_id integer primary key autoincrement,"
+            "bank_name TEXT not null,"
             "id INT not null,"
             "category_id INT not null,"
             "amount INT not null,"
@@ -131,7 +133,8 @@ class DatabaseConnection:
     ):
         query = (
             f"Create table investments ("
-            "investment_id INT primary key not null,"
+            "investment_id integer primary key autoincrement,"
+            "bank_name TEXT not null,"
             "id INT not null,"
             "type TEXT not null,"
             "amount INT not null,"
