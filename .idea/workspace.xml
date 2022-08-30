@@ -1,30 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="adc47824-1469-4553-80df-90f4b551b2a5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/Expense-Manager.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/expense_manager/constants/success_constants.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/expense_manager/controller/bank_controller.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/expense_manager/controller/category_controller.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/expense_manager/controller/expenses_controller.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/expense_manager/controller/income_controller.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/expense_manager/controller/investments_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/expense_manager/app/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_manager/app/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/expense_manager/constants/exception_constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_manager/constants/exception_constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/expense_manager/constants/table_names.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_manager/constants/table_names.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/expense_manager/controller/login_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_manager/controller/login_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/expense_manager/controller/registration_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_manager/controller/registration_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/expense_manager/db/ExpenseManager.db" beforeDir="false" afterPath="$PROJECT_DIR$/expense_manager/db/ExpenseManager.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/expense_manager/db/db_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_manager/db/db_schema.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/expense_manager/db/db_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_manager/db/db_utils.py" afterDir="false" />
-    </list>
+    <list default="true" id="adc47824-1469-4553-80df-90f4b551b2a5" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
