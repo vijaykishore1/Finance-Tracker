@@ -108,7 +108,7 @@ class DbUtils:
 
 if __name__ == "__main__":
     conn_obj = DbUtils()
-    # conn_obj.delete_from_table(table_name="income",where_clause='income_id = 1')
+    # conn_obj.delete_from_table(table_name="bank_account",where_clause='bank_id = 7')
     # conn_obj.delete_from_table(table_name="login")
     # conn_obj.delete_from_table(table_name="bank_account")
     # conn_obj.delete_from_table(table_name="categories")
