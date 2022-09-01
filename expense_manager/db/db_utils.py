@@ -90,6 +90,11 @@ class DbUtils:
         self.run_query(input_str=query)
         print("Column Name Changed Successfully")
 
+    def alter_add_a_column_to_table(self,table_name,column_name):            # BE CAREFUL WITH THIS METHOD AND USE IT ONLY FOR IMPORTANT OPERATIONS
+        query = f"alter table '{table_name}' add '{column_name}' INT not null default(0)"
+        self.run_query(input_str=query)
+        print("Column Added Successfully")
+
     def drop_table(
         self, table_name
     ):  # BE CAREFUL WITH THIS METHOD AND USE IT ONLY FOR IMPORTANT OPERATIONS
