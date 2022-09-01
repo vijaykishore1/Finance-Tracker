@@ -2,13 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="adc47824-1469-4553-80df-90f4b551b2a5" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/expense_manager/controller/categories_controller.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/expense_manager/useful resources/categories for expenses.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/expense_manager/useful resources/db_context_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/expense_manager/app/api.docx" beforeDir="false" afterPath="$PROJECT_DIR$/expense_manager/app/api.docx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/expense_manager/app/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_manager/app/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/expense_manager/constants/db_constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_manager/constants/db_constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/expense_manager/constants/exception_constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_manager/constants/exception_constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/expense_manager/constants/success_constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_manager/constants/success_constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/expense_manager/constants/table_names.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_manager/constants/table_names.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/expense_manager/controller/bank_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_manager/controller/bank_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/expense_manager/controller/category_controller.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/expense_manager/controller/expenses_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_manager/controller/expenses_controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/expense_manager/controller/income_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_manager/controller/income_controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/expense_manager/controller/investments_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_manager/controller/investments_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/expense_manager/controller/login_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_manager/controller/login_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/expense_manager/controller/registration_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_manager/controller/registration_controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/expense_manager/db/ExpenseManager.db" beforeDir="false" afterPath="$PROJECT_DIR$/expense_manager/db/ExpenseManager.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/expense_manager/db/db_schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_manager/db/db_schema.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/expense_manager/db/db_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_manager/db/db_utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -45,7 +57,7 @@
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/KISHORE/Expense-Manager/expense_manager/controller&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/KISHORE/Expense-Manager trying context manager&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;project.scopes&quot;
   }
 }</component>
@@ -56,11 +68,12 @@
       <recent name="D:\KISHORE\Expense-Manager\expense_manager\app" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\KISHORE\Expense-Manager\expense_manager\useful resources" />
       <recent name="D:\KISHORE\Expense-Manager\expense_manager\app" />
       <recent name="D:\KISHORE\Expense-Manager\expense_manager\constants" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.db_utils">
+  <component name="RunManager" selected="Python.app">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Expense-Manager" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -74,6 +87,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/expense_manager/app/app.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="bank_controller" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Expense-Manager" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/expense_manager/controller" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/expense_manager/controller/bank_controller.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -124,27 +158,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="income_controller" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Expense-Manager" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/expense_manager/controller" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/expense_manager/controller/income_controller.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="investments_controller" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Expense-Manager" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -168,11 +181,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.db_utils" />
         <item itemvalue="Python.app" />
-        <item itemvalue="Python.investments_controller" />
+        <item itemvalue="Python.db_utils" />
         <item itemvalue="Python.expenses_controller" />
-        <item itemvalue="Python.income_controller" />
+        <item itemvalue="Python.bank_controller" />
+        <item itemvalue="Python.investments_controller" />
       </list>
     </recent_temporary>
   </component>
