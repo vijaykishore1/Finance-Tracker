@@ -5,7 +5,10 @@ from expense_manager.controller.bank_controller import BankController
 from expense_manager.controller.income_controller import IncomeController
 from expense_manager.controller.expenses_controller import ExpensesController
 from expense_manager.controller.investments_controller import InvestmentsController
-from expense_manager.constants.exception_constants import USERNAME_DOES_NOT_EXIST_ERROR,BANK_ACCOUNT_DOES_NOT_EXISTS_ERROR
+from expense_manager.constants.exception_constants import (
+    USERNAME_DOES_NOT_EXIST_ERROR,
+    BANK_ACCOUNT_DOES_NOT_EXISTS_ERROR,
+)
 from expense_manager.db.db_utils import DbUtils
 
 import json
@@ -119,7 +122,7 @@ def balance():
     # with DbUtils() as utils_obj:
     if not LoginController.is_username_exist(user_name):
         return USERNAME_DOES_NOT_EXIST_ERROR
-    if not BankController.is_bank_account_exist(username=user_name,bank_name=bankname):
+    if not BankController.is_bank_account_exist(username=user_name, bank_name=bankname):
         return BANK_ACCOUNT_DOES_NOT_EXISTS_ERROR
     curr_bal = BankController.get_balance(username=user_name, bank_name=bankname)
     return str(curr_bal)

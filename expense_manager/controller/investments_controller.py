@@ -48,14 +48,20 @@ class InvestmentsController:
                         column_name="investments_category_id",
                         where_clause=f"investments_category = '{category}' and investments_sub_category = '{sub_category}'",
                     )[0][0]
-                    count_of_this_category = utils_obj.select_from_table(
+                    count_of_this_category = (
+                        utils_obj.select_from_table(
+                            table_name=INVESTMENTS_CATEGORY_TABLE,
+                            column_name="count",
+                            where_clause=f"investments_category = '{category}' and investments_sub_category = '{sub_category}'",
+                        )[0][0]
+                        + 1
+                    )
+                    utils_obj.update_in_table(
                         table_name=INVESTMENTS_CATEGORY_TABLE,
                         column_name="count",
+                        value=count_of_this_category,
                         where_clause=f"investments_category = '{category}' and investments_sub_category = '{sub_category}'",
-                    )[0][0] + 1
-                    utils_obj.update_in_table(table_name=INVESTMENTS_CATEGORY_TABLE, column_name="count",
-                                              value=count_of_this_category,
-                                              where_clause=f"investments_category = '{category}' and investments_sub_category = '{sub_category}'",)
+                    )
                 elif InvestmentsCategoriesController.is_sub_category_exists(category):
                     if not sub_category:
                         new_category_id = utils_obj.select_from_table(
@@ -63,14 +69,20 @@ class InvestmentsController:
                             column_name="investments_category_id",
                             where_clause=f"investments_sub_category = '{category}'",
                         )[0][0]
-                        count_of_this_category = utils_obj.select_from_table(
+                        count_of_this_category = (
+                            utils_obj.select_from_table(
+                                table_name=INVESTMENTS_CATEGORY_TABLE,
+                                column_name="count",
+                                where_clause=f"investments_sub_category = '{category}'",
+                            )[0][0]
+                            + 1
+                        )
+                        utils_obj.update_in_table(
                             table_name=INVESTMENTS_CATEGORY_TABLE,
                             column_name="count",
+                            value=count_of_this_category,
                             where_clause=f"investments_sub_category = '{category}'",
-                        )[0][0] + 1
-                        utils_obj.update_in_table(table_name=INVESTMENTS_CATEGORY_TABLE, column_name="count",
-                                                  value=count_of_this_category,
-                                                  where_clause=f"investments_sub_category = '{category}'",)
+                        )
                 elif not InvestmentsCategoriesController.is_sub_category_exists(sub_category):
                     utils_obj.insert_into_table(
                         table_name=INVESTMENTS_CATEGORY_TABLE,
@@ -82,14 +94,20 @@ class InvestmentsController:
                         column_name="investments_category_id",
                         where_clause=f"investments_category = '{category}' and investments_sub_category = '{sub_category}'",
                     )[0][0]
-                    count_of_this_category = utils_obj.select_from_table(
+                    count_of_this_category = (
+                        utils_obj.select_from_table(
+                            table_name=INVESTMENTS_CATEGORY_TABLE,
+                            column_name="count",
+                            where_clause=f"investments_category = '{category}' and investments_sub_category = '{sub_category}'",
+                        )[0][0]
+                        + 1
+                    )
+                    utils_obj.update_in_table(
                         table_name=INVESTMENTS_CATEGORY_TABLE,
                         column_name="count",
+                        value=count_of_this_category,
                         where_clause=f"investments_category = '{category}' and investments_sub_category = '{sub_category}'",
-                    )[0][0] + 1
-                    utils_obj.update_in_table(table_name=INVESTMENTS_CATEGORY_TABLE, column_name="count",
-                                              value=count_of_this_category,
-                                              where_clause=f"investments_category = '{category}' and investments_sub_category = '{sub_category}'",)
+                    )
 
                 else:
                     new_category_id = utils_obj.select_from_table(
@@ -97,14 +115,20 @@ class InvestmentsController:
                         column_name="investments_category_id",
                         where_clause=f"investments_category = '{category}'",
                     )[0][0]
-                    count_of_this_category = utils_obj.select_from_table(
+                    count_of_this_category = (
+                        utils_obj.select_from_table(
+                            table_name=INVESTMENTS_CATEGORY_TABLE,
+                            column_name="count",
+                            where_clause=f"investments_category = '{category}'",
+                        )[0][0]
+                        + 1
+                    )
+                    utils_obj.update_in_table(
                         table_name=INVESTMENTS_CATEGORY_TABLE,
                         column_name="count",
+                        value=count_of_this_category,
                         where_clause=f"investments_category = '{category}'",
-                    )[0][0] + 1
-                    utils_obj.update_in_table(table_name=INVESTMENTS_CATEGORY_TABLE, column_name="count",
-                                              value=count_of_this_category,
-                                              where_clause=f"investments_category = '{category}'",)
+                    )
             if not InvestmentsCategoriesController.is_category_exists(category):
                 if not InvestmentsCategoriesController.is_sub_category_exists(sub_category):
                     if not InvestmentsCategoriesController.is_sub_category_exists(category):
@@ -119,14 +143,20 @@ class InvestmentsController:
                                 column_name="investments_category_id",
                                 where_clause=f"investments_category = '{category}' and investments_sub_category = '{sub_category}'",
                             )[0][0]
-                            count_of_this_category = utils_obj.select_from_table(
+                            count_of_this_category = (
+                                utils_obj.select_from_table(
+                                    table_name=INVESTMENTS_CATEGORY_TABLE,
+                                    column_name="count",
+                                    where_clause=f"investments_category = '{category}' and investments_sub_category = '{sub_category}'",
+                                )[0][0]
+                                + 1
+                            )
+                            utils_obj.update_in_table(
                                 table_name=INVESTMENTS_CATEGORY_TABLE,
                                 column_name="count",
+                                value=count_of_this_category,
                                 where_clause=f"investments_category = '{category}' and investments_sub_category = '{sub_category}'",
-                            )[0][0] + 1
-                            utils_obj.update_in_table(table_name=INVESTMENTS_CATEGORY_TABLE, column_name="count",
-                                                      value=count_of_this_category,
-                                                      where_clause=f"investments_category = '{category}' and investments_sub_category = '{sub_category}'",)
+                            )
                         else:
                             utils_obj.insert_into_table(
                                 table_name=INVESTMENTS_CATEGORY_TABLE,
@@ -138,28 +168,40 @@ class InvestmentsController:
                                 column_name="investments_category_id",
                                 where_clause=f"investments_category = '{category}'",
                             )[0][0]
-                            count_of_this_category = utils_obj.select_from_table(
+                            count_of_this_category = (
+                                utils_obj.select_from_table(
+                                    table_name=INVESTMENTS_CATEGORY_TABLE,
+                                    column_name="count",
+                                    where_clause=f"investments_category = '{category}'",
+                                )[0][0]
+                                + 1
+                            )
+                            utils_obj.update_in_table(
                                 table_name=INVESTMENTS_CATEGORY_TABLE,
                                 column_name="count",
+                                value=count_of_this_category,
                                 where_clause=f"investments_category = '{category}'",
-                            )[0][0] + 1
-                            utils_obj.update_in_table(table_name=INVESTMENTS_CATEGORY_TABLE, column_name="count",
-                                                      value=count_of_this_category,
-                                                      where_clause=f"investments_category = '{category}'",)
+                            )
                 if InvestmentsCategoriesController.is_sub_category_exists(category):
                     new_category_id = utils_obj.select_from_table(
                         table_name=INVESTMENTS_CATEGORY_TABLE,
                         column_name="investments_category_id",
                         where_clause=f"investments_sub_category = '{category}'",
                     )[0][0]
-                    count_of_this_category = utils_obj.select_from_table(
+                    count_of_this_category = (
+                        utils_obj.select_from_table(
+                            table_name=INVESTMENTS_CATEGORY_TABLE,
+                            column_name="count",
+                            where_clause=f"investments_sub_category = '{category}'",
+                        )[0][0]
+                        + 1
+                    )
+                    utils_obj.update_in_table(
                         table_name=INVESTMENTS_CATEGORY_TABLE,
                         column_name="count",
+                        value=count_of_this_category,
                         where_clause=f"investments_sub_category = '{category}'",
-                    )[0][0] + 1
-                    utils_obj.update_in_table(table_name=INVESTMENTS_CATEGORY_TABLE, column_name="count",
-                                              value=count_of_this_category,
-                                              where_clause=f"investments_sub_category = '{category}'",)
+                    )
             user_id = utils_obj.select_from_table(
                 table_name="login", column_name="login_id", where_clause=f"username = '{username}'"
             )[0][0]
