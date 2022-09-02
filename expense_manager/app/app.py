@@ -71,15 +71,25 @@ def bank_details():
 def income():
     income_data = json.loads(request.data.decode("UTF-8"))
     assert "bank_name" in income_data  # TODO
-    response = IncomeController().insert_income_details(
-        bank_name=income_data["bank_name"],
-        username=income_data["username"],
-        category=income_data["category"],
-        sub_category=income_data["sub_category"],
-        amount=income_data["amount"],
-        date=income_data["date"],
-        description=income_data["description"],
-    )
+    if "sub_category" in income_data:
+        response = IncomeController().insert_income_details(
+            bank_name=income_data["bank_name"],
+            username=income_data["username"],
+            category=income_data["category"],
+            sub_category=income_data["sub_category"],
+            amount=income_data["amount"],
+            date=income_data["date"],
+            description=income_data["description"],
+        )
+    else:
+        response = IncomeController().insert_income_details(
+            bank_name=income_data["bank_name"],
+            username=income_data["username"],
+            category=income_data["category"],
+            amount=income_data["amount"],
+            date=income_data["date"],
+            description=income_data["description"],
+        )
     return response
 
 
@@ -87,15 +97,25 @@ def income():
 def expenses():
     expenses_data = json.loads(request.data.decode("UTF-8"))
     assert "bank_name" in expenses_data  # TODO
-    response = ExpensesController().insert_expenses_details(
-        bank_name=expenses_data["bank_name"],
-        username=expenses_data["username"],
-        category=expenses_data["category"],
-        sub_category=expenses_data["sub_category"],
-        amount=expenses_data["amount"],
-        date=expenses_data["date"],
-        description=expenses_data["description"],
-    )
+    if "sub_category" in expenses_data:
+        response = ExpensesController().insert_expenses_details(
+            bank_name=expenses_data["bank_name"],
+            username=expenses_data["username"],
+            category=expenses_data["category"],
+            sub_category=expenses_data["sub_category"],
+            amount=expenses_data["amount"],
+            date=expenses_data["date"],
+            description=expenses_data["description"],
+        )
+    else:
+        response = ExpensesController().insert_expenses_details(
+            bank_name=expenses_data["bank_name"],
+            username=expenses_data["username"],
+            category=expenses_data["category"],
+            amount=expenses_data["amount"],
+            date=expenses_data["date"],
+            description=expenses_data["description"],
+        )
     return response
 
 
@@ -103,29 +123,100 @@ def expenses():
 def investments():
     investments_data = json.loads(request.data.decode("UTF-8"))
     assert "bank_name" in investments_data  # TODO
-    response = InvestmentsController().insert_investments_details(
-        bank_name=investments_data["bank_name"],
-        username=investments_data["username"],
-        category=investments_data["category"],
-        sub_category=investments_data["sub_category"],
-        amount=investments_data["amount"],
-        date=investments_data["date"],
-        description=investments_data["description"],
-    )
+    if "sub_category" in investments_data:
+        response = InvestmentsController().insert_investments_details(
+            bank_name=investments_data["bank_name"],
+            username=investments_data["username"],
+            category=investments_data["category"],
+            sub_category=investments_data["sub_category"],
+            amount=investments_data["amount"],
+            date=investments_data["date"],
+            description=investments_data["description"],
+        )
+    else:
+        response = InvestmentsController().insert_investments_details(
+            bank_name=investments_data["bank_name"],
+            username=investments_data["username"],
+            category=investments_data["category"],
+            amount=investments_data["amount"],
+            date=investments_data["date"],
+            description=investments_data["description"],
+        )
     return response
 
 
-@app.route("/balance", methods=["GET"])
+@app.route("/getdetails/balance", methods=["GET"])
 def balance():
     user_name = request.args.get("username")
-    bankname = request.args.get("bank_name")
-    # with DbUtils() as utils_obj:
     if not LoginController.is_username_exist(user_name):
         return USERNAME_DOES_NOT_EXIST_ERROR
-    if not BankController.is_bank_account_exist(username=user_name, bank_name=bankname):
-        return BANK_ACCOUNT_DOES_NOT_EXISTS_ERROR
-    curr_bal = BankController.get_balance(username=user_name, bank_name=bankname)
-    return str(curr_bal)
+    with DbUtils() as utils_obj:
+        ans = utils_obj.get_balance_of_user(username=user_name)
+    return str(ans)
+
+
+@app.route("/getdetails/logindetails", methods=["GET"])
+def logindetails():
+    user_name = request.args.get("username")
+    if not LoginController.is_username_exist(user_name):
+        return USERNAME_DOES_NOT_EXIST_ERROR
+    with DbUtils() as utils_obj:
+        ans = utils_obj.get_login_details_of_user(username=user_name)
+    return str(ans)
+
+@app.route("/getdetails/user_bio", methods=["GET"])
+def user_bio():
+    user_name = request.args.get("username")
+    if not LoginController.is_username_exist(user_name):
+        return USERNAME_DOES_NOT_EXIST_ERROR
+    with DbUtils() as utils_obj:
+        ans = utils_obj.get_bio_of_user(username=user_name)
+    return str(ans)
+
+@app.route("/getdetails/bank_accounts", methods=["GET"])
+def bank_accounts():
+    user_name = request.args.get("username")
+    if not LoginController.is_username_exist(user_name):
+        return USERNAME_DOES_NOT_EXIST_ERROR
+    with DbUtils() as utils_obj:
+        ans = utils_obj.get_bank_accounts_of_user(username=user_name)
+    return str(ans)
+
+@app.route("/getdetails/income_details", methods=["GET"])
+def income_details():
+    user_name = request.args.get("username")
+    if not LoginController.is_username_exist(user_name):
+        return USERNAME_DOES_NOT_EXIST_ERROR
+    with DbUtils() as utils_obj:
+        ans = utils_obj.get_income_details_of_user(username=user_name)
+    return str(ans)
+
+@app.route("/getdetails/expenses_details", methods=["GET"])
+def expenses_details():
+    user_name = request.args.get("username")
+    if not LoginController.is_username_exist(user_name):
+        return USERNAME_DOES_NOT_EXIST_ERROR
+    with DbUtils() as utils_obj:
+        ans = utils_obj.get_expenses_details_of_user(username=user_name)
+    return str(ans)
+
+@app.route("/getdetails/investments_details", methods=["GET"])
+def investments_details():
+    user_name = request.args.get("username")
+    if not LoginController.is_username_exist(user_name):
+        return USERNAME_DOES_NOT_EXIST_ERROR
+    with DbUtils() as utils_obj:
+        ans = utils_obj.get_investments_details_of_user(username=user_name)
+    return str(ans)
+
+@app.route("/getdetails/all", methods=["GET"])
+def all_details():
+    user_name = request.args.get("username")
+    if not LoginController.is_username_exist(user_name):
+        return USERNAME_DOES_NOT_EXIST_ERROR
+    with DbUtils() as utils_obj:
+        ans = utils_obj.get_all_details_of_user(username=user_name)
+    return str(ans)
 
 
 if __name__ == "__main__":

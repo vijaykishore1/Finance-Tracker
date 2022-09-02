@@ -88,7 +88,8 @@ class DatabaseConnection:
             f"Create table expenses_categories ("
             "expenses_category_id integer primary key autoincrement,"
             "expenses_category TEXT not null,"
-            "expenses_sub_category TEXT"
+            "expenses_sub_category TEXT,"
+            "count INT default 0"
             ");"
         )
         self.run_query(input_str=query)
@@ -102,7 +103,8 @@ class DatabaseConnection:
             f"Create table investments_categories ("
             "investments_category_id integer primary key autoincrement,"
             "investments_category TEXT not null,"
-            "investments_sub_category TEXT"
+            "investments_sub_category TEXT,"
+            "count INT default 0"
             ");"
         )
         self.run_query(input_str=query)
@@ -116,7 +118,8 @@ class DatabaseConnection:
             f"Create table income_categories ("
             "income_category_id integer primary key autoincrement,"
             "income_category TEXT not null,"
-            "income_sub_category TEXT"
+            "income_sub_category TEXT,"
+            "count INT default 0"
             ");"
         )
         self.run_query(input_str=query)
