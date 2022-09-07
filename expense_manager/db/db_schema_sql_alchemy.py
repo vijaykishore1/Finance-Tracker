@@ -1,9 +1,12 @@
 import sqlite3
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy(app)
 
 
 class DatabaseConnection:
     def __init__(
-        self,
+            self,
     ):
         self.con = None
         self.connect_connection()
@@ -17,42 +20,45 @@ class DatabaseConnection:
         self.create_table_login()
         self.create_table_bank_account()
 
-    def connect_connection(
-        self,
-    ):
-        self.con = sqlite3.connect(database="ExpenseManager.db")
+    # def connect_connection(
+    #         self,
+    # ):
+    #     self.con = sqlite3.connect(database="ExpenseManager.db")
+    #
+    # def run_query(
+    #         self,
+    #         input_str,
+    # ):
+    #     print(
+    #         "Executing input_str:",
+    #         input_str,
+    #     )
+    #     cur = self.con.cursor()
+    #     cur.execute(input_str)
+    #     self.con.commit()
+    #     return cur
 
-    def run_query(
-        self,
-        input_str,
-    ):
-        print(
-            "Executing input_str:",
-            input_str,
-        )
-        cur = self.con.cursor()
-        cur.execute(input_str)
-        self.con.commit()
-        return cur
+    class User(db.Model):
+        id = db.Column(db.Integer, primary_key=True)
+        username = db.Column(db.String(20), unique=True, nullable=False)
+        email = db.Column(db.String(120), unique=True, nullable=False)
+        image_file = db.Column(db.String(20), nullable=False, default='default.jpeg')
+        password = db.Column(db.String(60), nullable=False)
 
-    def create_table_user(
-        self,
-        # table_name,
-    ):
-        query = (
-            f"Create table user ("
-            "id integer primary key autoincrement,"
-            "name TEXT not null,"
-            "phone_number TEXT not null"
-            # "primary key (id)"
-            ");"
-        )
-        self.run_query(input_str=query)
-        print("Table created successfully")
+        def __repr__(self):
+            return f"User('{self.username}','{self.email}', '{self.image_file}')"
 
+    # class BankAccount(db.Model):
+    # class ExpensesCategories(db.Model):
+    # class InvestmentsCategories(db.Model):
+    # class IncomeCategories(db.Model):
+    # class Expenses(db.Model):
+    # class Investments(db.Model):
+    # class Income(db.Model):
+        
     def create_table_login(
-        self,
-        # table_name,
+            self,
+            # table_name,
     ):
         query = (
             f"Create table login ("
@@ -67,8 +73,8 @@ class DatabaseConnection:
         print("Table created successfully")
 
     def create_table_bank_account(
-        self,
-        # table_name,
+            self,
+            # table_name,
     ):
         query = (
             f"Create table bank_account ("
@@ -82,8 +88,8 @@ class DatabaseConnection:
         print("Table created successfully")
 
     def create_table_expenses_categories(
-        self,
-        # table_name,
+            self,
+            # table_name,
     ):
         query = (
             f"Create table expenses_categories ("
@@ -97,8 +103,8 @@ class DatabaseConnection:
         print("Table created successfully")
 
     def create_table_investments_categories(
-        self,
-        # table_name,
+            self,
+            # table_name,
     ):
         query = (
             f"Create table investments_categories ("
@@ -112,8 +118,8 @@ class DatabaseConnection:
         print("Table created successfully")
 
     def create_table_income_categories(
-        self,
-        # table_name,
+            self,
+            # table_name,
     ):
         query = (
             f"Create table income_categories ("

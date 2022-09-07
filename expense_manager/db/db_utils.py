@@ -1,7 +1,9 @@
 import sqlite3
+import expense_manager.controller.login_controller
 from expense_manager.constants.db_constants import DB_PATH
 from expense_manager.constants.table_names import LOGIN_TABLE, EXPENSES_TABLE, EXPENSES_CATEGORY_TABLE, \
     INCOME_CATEGORY_TABLE, INVESTMENTS_CATEGORY_TABLE, INVESTMENTS_TABLE, INCOME_TABLE, BANK_ACCOUNT_TABLE, USER_TABLE
+from expense_manager.constants.exception_constants import USERNAME_DOES_NOT_EXIST_ERROR
 
 
 class DbUtils:
@@ -64,12 +66,10 @@ class DbUtils:
         print("Table updated successfully")
 
     def get_login_details_of_user(self, username):
+        if not expense_manager.controller.login_controller.LoginController.is_username_exist(username):
+            return USERNAME_DOES_NOT_EXIST_ERROR
         ans = []
         final_ans = ""
-        user_id = \
-            self.select_from_table(table_name="login", column_name="login_id", where_clause=f"username = '{username}'")[
-                0][
-                0]
         query = f"select username from {LOGIN_TABLE} where username = '{username}' "
         res = (self.run_query(input_str=query))
         ans.append("username = " + res.fetchall()[0][0])
@@ -81,6 +81,8 @@ class DbUtils:
         return final_ans
 
     def get_bio_of_user(self, username):
+        if not expense_manager.controller.login_controller.LoginController.is_username_exist(username):
+            return USERNAME_DOES_NOT_EXIST_ERROR
         ans = []
         final_ans = ""
         user_id = \
@@ -99,12 +101,15 @@ class DbUtils:
         return final_ans
 
     def get_bank_accounts_of_user(self, username):
+        if not expense_manager.controller.login_controller.LoginController.is_username_exist(username):
+            return USERNAME_DOES_NOT_EXIST_ERROR
         ans = []
         final_ans = ""
         user_id = \
             self.select_from_table(table_name="login", column_name="login_id", where_clause=f"username = '{username}'")[
                 0][
                 0]
+
         query = f"select bank_name from {BANK_ACCOUNT_TABLE} where id = '{user_id}' "
         res = (self.run_query(input_str=query))
         bank_account_array = res.fetchall()
@@ -115,6 +120,8 @@ class DbUtils:
         return final_ans
 
     def get_income_details_of_user(self, username):
+        if not expense_manager.controller.login_controller.LoginController.is_username_exist(username):
+            return USERNAME_DOES_NOT_EXIST_ERROR
         ans = []
         final_ans = ""
         user_id = \
@@ -152,10 +159,12 @@ class DbUtils:
             for i in range(len(ans)):
                 final_ans += ans[i] + "\n"
         if len(ans) == 0:
-            return "you don't have any income record yet"
+            return "you don't have any income record yet \n"
         return final_ans
 
     def get_investments_details_of_user(self, username):
+        if not expense_manager.controller.login_controller.LoginController.is_username_exist(username):
+            return USERNAME_DOES_NOT_EXIST_ERROR
         ans = []
         final_ans = ""
         user_id = \
@@ -194,10 +203,12 @@ class DbUtils:
             for i in range(len(ans)):
                 final_ans += ans[i] + "\n"
         if len(ans) == 0:
-            return "you haven't made any investments"
+            return "you haven't made any investments \n"
         return final_ans
 
     def get_expenses_details_of_user(self, username):
+        if not expense_manager.controller.login_controller.LoginController.is_username_exist(username):
+            return USERNAME_DOES_NOT_EXIST_ERROR
         ans = []
         final_ans = ""
         user_id = \
@@ -237,10 +248,12 @@ class DbUtils:
             for i in range(len(ans)):
                 final_ans += ans[i] + "\n"
         if len(ans) == 0:
-            return "you haven't made any expenses"
+            return "you haven't made any expenses \n"
         return final_ans
 
     def get_balance_of_user(self, username):
+        if not expense_manager.controller.login_controller.LoginController.is_username_exist(username):
+            return USERNAME_DOES_NOT_EXIST_ERROR
         user_id = \
             self.select_from_table(table_name="login", column_name="login_id", where_clause=f"username = '{username}'")[
                 0][
@@ -261,7 +274,12 @@ class DbUtils:
         return final_ans
 
     def get_all_details_of_user(self, username):
-        final_ans = self.get_login_details_of_user(username=username) +self.get_bio_of_user(username=username)+self.get_bank_accounts_of_user(username=username)+self.get_balance_of_user(username=username)+self.get_income_details_of_user(username=username)+self.get_expenses_details_of_user(username=username)+self.get_investments_details_of_user(username=username)
+        if not expense_manager.controller.login_controller.LoginController.is_username_exist(username):
+            return USERNAME_DOES_NOT_EXIST_ERROR
+        final_ans = self.get_login_details_of_user(username=username)+ self.get_bio_of_user(
+            username=username) + self.get_bank_accounts_of_user(username=username) + self.get_balance_of_user(
+            username=username) + self.get_income_details_of_user(username=username) + self.get_expenses_details_of_user(
+            username=username) + self.get_investments_details_of_user(username=username)
         return final_ans
 
     def select_from_table(self, table_name, column_name="*", where_clause=""):
@@ -335,7 +353,7 @@ if __name__ == "__main__":
         # print(utils_obj.select_from_table(table_name="expenses_categories"))
         # print(utils_obj.select_from_table(table_name="income_categories"))
 
-        print(utils_obj.get_all_details_of_user(username="abhijitashok"))
+        # print(utils_obj.get_all_details_of_user(username="abhijitashok"))
         # print(utils_obj.get_balance_of_user(username="abhijitashok"))
         # print(utils_obj.get_login_details_of_user(username="abhijitashok"))
         # print(utils_obj.get_bio_of_user(username="abhijitashok"))
@@ -344,3 +362,4 @@ if __name__ == "__main__":
         # print(utils_obj.get_income_details_of_user(username="abhijitashok"))
         # print(utils_obj.get_investments_details_of_user(username="abhijitashok"))
         # print(utils_obj.get_expenses_details_of_user(username="abhijitashok"))
+        print(utils_obj.get_all_details_of_user(username="priyav"))
