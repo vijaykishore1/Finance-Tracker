@@ -216,7 +216,7 @@ def all_details():
         return USERNAME_DOES_NOT_EXIST_ERROR
     with DbUtils() as utils_obj:
         ans = utils_obj.get_all_details_of_user(username=user_name)
-    return str(ans)
+    return (ans)
 
 
 if __name__ == "__main__":

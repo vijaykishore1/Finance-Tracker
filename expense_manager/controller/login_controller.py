@@ -3,6 +3,8 @@ from expense_manager.constants.table_names import LOGIN_TABLE
 from expense_manager.constants.exception_constants import (
     PASSWORD_NOT_VALIDATED,
     USERNAME_DOES_NOT_EXIST_ERROR,
+    USERNAME_CANNOT_BE_NULL,
+    NOT_NULL_CONSTRAINT
 )
 from expense_manager.constants.success_constants import PASSWORD_VALIDATED
 
@@ -25,6 +27,8 @@ class LoginController:
             return False
 
     def validate_login(self, username, password):
+        if not username:
+            return f"username {NOT_NULL_CONSTRAINT}"
         if not self.is_username_exist(username):
             return USERNAME_DOES_NOT_EXIST_ERROR
         with DbUtils() as utils_obj:
