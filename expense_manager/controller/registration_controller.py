@@ -13,23 +13,23 @@ class RegistrationController:
         pass
 
     @staticmethod
-    def insert_registration_record(username, password, confirm_password, name, phone_number):
+    def insert_registration_record(username, password, email):
         if LoginController().is_username_exist(username):
             return USERNAME_ALREADY_EXISTS_ERROR
-        elif not DbUtils.is_value_match(value1=password, value2=confirm_password):
-            return PASSWORDS_DONT_MATCH_ERROR
+        # elif not DbUtils.is_value_match(value1=password, value2=confirm_password):
+        #     return PASSWORDS_DONT_MATCH_ERROR
         with DbUtils() as utils_obj:
-            utils_obj.insert_into_table(
-                table_name=USER_TABLE,
-                column_names="name, phone_number",
-                values=f"'{name}','{phone_number}'",
-            )
+            # utils_obj.insert_into_table(
+            #     table_name=USER_TABLE,
+            #     column_names="name, phone_number",
+            #     values=f"'{name}','{phone_number}'",
+            # )
             utils_obj.insert_into_table(
                 table_name=LOGIN_TABLE,
-                column_names="username,password",
-                values=f"'{username}','{password}'",
+                column_names="username,password,email",
+                values=f"'{username}','{password}','{email}'",
             )
-        return REGISTRATION_SUCCESS
+        return
 
 
 if __name__ == "__main__":
@@ -37,8 +37,6 @@ if __name__ == "__main__":
         RegistrationController.insert_registration_record(
             username="priyav",
             password="priyav123",
-            confirm_password="priyav123",
-            name="Priya Venkat",
-            phone_number="7826776233",
+            email="priyav@gmail.com"
         )
     )

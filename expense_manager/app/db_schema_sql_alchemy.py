@@ -124,10 +124,9 @@ class Income(db.Model):
     def __repr__(self):
         return f"User('{self.bank_name}', '{self.amount}', '{self.description}', '{self.date}')"
 
-if __name__ == '__main__':
 
-    # db.create_all()
-    # user_1 = User(name = 'Vijay Kishore', phone_number = '9876543210')
-    # db.session.add(user_1)
-    # db.session.commit()
-    print(User.query.all())
+# db.create_all()
+# user_1 = User(name = 'Vijay Kishore', phone_number = '9876543210')
+# db.session.add(user_1)
+# db.session.commit()
+print(User.query.all())

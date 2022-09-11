@@ -1,6 +1,8 @@
+from flask import render_template
+
 USERNAME_DOES_NOT_EXIST_ERROR = "username does not exist"
 PASSWORD_NOT_VALIDATED = "Password is incorrect. Please try again"
-USERNAME_ALREADY_EXISTS_ERROR = "Username already exists. Please try another username"
+USERNAME_ALREADY_EXISTS_ERROR = "username already exists. please try a new one"
 PASSWORDS_DONT_MATCH_ERROR = "Passwords do not match, enter again"
 BANK_ACCOUNT_ALREADY_EXISTS_ERROR = "You already have an account in this bank."
 CATEGORY_ALREADY_EXISTS_ERROR = "This category already exists"

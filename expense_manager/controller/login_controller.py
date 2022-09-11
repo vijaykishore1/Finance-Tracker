@@ -6,6 +6,7 @@ from expense_manager.constants.exception_constants import (
     USERNAME_CANNOT_BE_NULL,
     NOT_NULL_CONSTRAINT
 )
+
 from expense_manager.constants.success_constants import PASSWORD_VALIDATED
 
 
