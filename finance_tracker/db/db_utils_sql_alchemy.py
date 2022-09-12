@@ -3,12 +3,12 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 import os
-from expense_manager.constants.db_constants import SQLALCHEMY_DB_PATH
-# import expense_manager.controller.login_controller
-from expense_manager.constants.db_constants import DB_PATH
-from expense_manager.constants.table_names import LOGIN_TABLE, EXPENSES_TABLE, EXPENSES_CATEGORY_TABLE, \
+from finance_tracker.constants.db_constants import SQLALCHEMY_DB_PATH
+# import finance_tracker.controller.login_controller
+from finance_tracker.constants.db_constants import DB_PATH
+from finance_tracker.constants.table_names import LOGIN_TABLE, EXPENSES_TABLE, EXPENSES_CATEGORY_TABLE, \
     INCOME_CATEGORY_TABLE, INVESTMENTS_CATEGORY_TABLE, INVESTMENTS_TABLE, INCOME_TABLE, BANK_ACCOUNT_TABLE, USER_TABLE
-from expense_manager.constants.exception_constants import USERNAME_DOES_NOT_EXIST_ERROR
+from finance_tracker.constants.exception_constants import USERNAME_DOES_NOT_EXIST_ERROR
 
 
 class DbUtils:

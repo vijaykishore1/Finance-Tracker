@@ -1,35 +1,23 @@
-import sqlite3
 from datetime import datetime
-from flask import Flask, request, render_template, url_for, flash, redirect
+from expense_manager.app import db
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from expense_manager.constants.db_constants import SQLALCHEMY_DB_PATH
-import json
 import os
-
-SECRET_KEY = os.urandom(32)
-
-app = Flask(__name__)
-app.config['SECRET_KEY'] = SECRET_KEY
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ExpenseManagerAlchemy.db'
-db = SQLAlchemy(app)
 
 
 class Login(db.Model):
-    # __tablename__ = 'login'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
 
-    # users = db.relationship('User', backref='name', lazy = True)
-
     def __repr__(self):
         return f"Login('{self.username}','{self.email}', '{self.image_file}')"
 
 
 class User(db.Model):
-    # __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), nullable=False)
     phone_number = db.Column(db.String(15))
@@ -37,10 +25,6 @@ class User(db.Model):
 
     def __repr__(self):
         return f"User('{self.name}', '{self.phone_number}')"
-    # logins = db.relationship('Login', backref='login_id', lazy=True)
-    # bank_accounts = db.relationship('BankAccount', backref='bank_id', lazy=True)
-
-    #
 
 
 class BankAccount(db.Model):
@@ -124,9 +108,12 @@ class Income(db.Model):
     def __repr__(self):
         return f"User('{self.bank_name}', '{self.amount}', '{self.description}', '{self.date}')"
 
-
 # db.create_all()
-# user_1 = User(name = 'Vijay Kishore', phone_number = '9876543210')
-# db.session.add(user_1)
-# db.session.commit()
-print(User.query.all())
+
+
+if __name__ == '__main__':
+
+    # user_1 = User(name = 'Vijay Kishore', phone_number = '9876543210')
+    # db.session.add(user_1)
+    # db.session.commit()
+    print(Login.query.all())

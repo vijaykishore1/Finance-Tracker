@@ -1,12 +1,15 @@
 from datetime import datetime
-from expense_manager.app import db
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from expense_manager.constants.db_constants import SQLALCHEMY_DB_PATH
-import os
+from finance_tracker.app import db, login_manager
+from flask_login import UserMixin
 
 
-class Login(db.Model):
+@login_manager.user_loader
+def load_user(id):
+    return Login.query.get(int(id))
+
+
+class Login(db.Model, UserMixin):
+    __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -18,6 +21,7 @@ class Login(db.Model):
 
 
 class User(db.Model):
+    __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), nullable=False)
     phone_number = db.Column(db.String(15))
@@ -28,6 +32,7 @@ class User(db.Model):
 
 
 class BankAccount(db.Model):
+    __table_args__ = {'extend_existing': True}
     bank_id = db.Column(db.Integer, primary_key=True)
     bank_name = db.Column(db.String(20), nullable=False)
     amount = db.Column(db.Integer, default=0)
@@ -39,6 +44,7 @@ class BankAccount(db.Model):
 
 class ExpensesCategories(db.Model):
     __tablename__ = 'expensescategories'
+    __table_args__ = {'extend_existing': True}
     expenses_category_id = db.Column(db.Integer, primary_key=True)
     expenses_category = db.Column(db.String(40), nullable=False)
     expenses_sub_category = db.Column(db.String(40), default=None)
@@ -49,6 +55,7 @@ class ExpensesCategories(db.Model):
 
 class InvestmentsCategories(db.Model):
     __tablename__ = 'investmentscategories'
+    __table_args__ = {'extend_existing': True}
     investments_category_id = db.Column(db.Integer, primary_key=True)
     investments_category = db.Column(db.String(40), nullable=False)
     investments_sub_category = db.Column(db.String(40), default=None)
@@ -59,6 +66,7 @@ class InvestmentsCategories(db.Model):
 
 class IncomeCategories(db.Model):
     __tablename__ = 'incomecategories'
+    __table_args__ = {'extend_existing': True}
     income_category_id = db.Column(db.Integer, primary_key=True)
     income_category = db.Column(db.String(40), nullable=False)
     income_sub_category = db.Column(db.String(40), default=None)
@@ -68,7 +76,7 @@ class IncomeCategories(db.Model):
 
 
 class Expenses(db.Model):
-
+    __table_args__ = {'extend_existing': True}
     expenses_id = db.Column(db.Integer, primary_key=True)
     bank_name = db.Column(db.String(20), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('login.id'), nullable=False)
@@ -83,6 +91,7 @@ class Expenses(db.Model):
 
 
 class Investments(db.Model):
+    __table_args__ = {'extend_existing': True}
     investments_id = db.Column(db.Integer, primary_key=True)
     bank_name = db.Column(db.String(20), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('login.id'), nullable=False)
@@ -97,6 +106,7 @@ class Investments(db.Model):
 
 
 class Income(db.Model):
+    __table_args__ = {'extend_existing': True}
     income_id = db.Column(db.Integer, primary_key=True)
     bank_name = db.Column(db.String(20), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('login.id'), nullable=False)
@@ -108,11 +118,11 @@ class Income(db.Model):
     def __repr__(self):
         return f"User('{self.bank_name}', '{self.amount}', '{self.description}', '{self.date}')"
 
+
 # db.create_all()
 
 
 if __name__ == '__main__':
-
     # user_1 = User(name = 'Vijay Kishore', phone_number = '9876543210')
     # db.session.add(user_1)
     # db.session.commit()
