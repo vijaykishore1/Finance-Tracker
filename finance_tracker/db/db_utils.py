@@ -1,5 +1,4 @@
 import sqlite3
-# import finance_tracker.controller.login_controller
 from finance_tracker.constants.db_constants import DB_PATH
 from finance_tracker.constants.table_names import LOGIN_TABLE, EXPENSES_TABLE, EXPENSES_CATEGORY_TABLE, \
     INCOME_CATEGORY_TABLE, INVESTMENTS_CATEGORY_TABLE, INVESTMENTS_TABLE, INCOME_TABLE, BANK_ACCOUNT_TABLE, USER_TABLE
@@ -64,10 +63,7 @@ class DbUtils:
 
     @staticmethod
     def is_value_match(value1, value2):
-        if value1 != value2:
-            return False
-        else:
-            return True
+        return value1 == value2
 
     def alter_the_column_name(
             self, table_name, old_name, new_name

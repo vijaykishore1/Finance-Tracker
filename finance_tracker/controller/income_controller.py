@@ -14,15 +14,10 @@ class IncomeController:
     def __init__(self):
         pass
 
-    # def is_income_already_exist(self, bank_name, id, source, amount, date, description):
-    #     income_list = self.dbutils_obj.select_from_table(
-    #         table_name=INCOME_TABLE,
-    #         where_clause=f"bank_name = '{bank_name}' and id = {id} and source = '{source}' and amount = {amount} and date = {date} and description = '{description}'",
-    #     )
-    #     if income_list:
-    #         return True
-    #     else:
-    #         return False
+    # def is_income_already_exist(self, bank_name, id, source, amount, date, description): income_list =
+    # self.dbutils_obj.select_from_table( table_name=INCOME_TABLE, where_clause=f"bank_name = '{bank_name}' and id =
+    # {id} and source = '{source}' and amount = {amount} and date = {date} and description = '{description}'",
+    # ) if income_list: return True else: return False
     @staticmethod
     def insert_income_details(
         bank_name, username, category, amount, date, description, sub_category=None
