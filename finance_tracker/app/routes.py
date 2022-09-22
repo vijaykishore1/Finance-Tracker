@@ -4,7 +4,7 @@ from PIL import Image
 from flask import request, render_template, url_for, flash, redirect
 from flask_login import login_user, current_user, logout_user, login_required
 from finance_tracker.app import app, db, bcrypt
-from finance_tracker.controller.forms import RegistrationForm, LoginForm, UpdateAccountForm
+from finance_tracker.controller.forms import RegistrationForm, LoginForm, UpdateAccountForm, BankDetailsForm
 from finance_tracker.controller.bank_controller import BankController
 from finance_tracker.controller.income_controller import IncomeController
 from finance_tracker.controller.expenses_controller import ExpensesController
@@ -19,7 +19,8 @@ import json
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('home.html')
+    bank = BankAccount.query.all()
+    return render_template('home.html', bank=bank)
 
 
 @app.route("/about")
@@ -71,7 +72,7 @@ def save_picture(form_picture):
     picture_filename = random_hex + f_ext
     picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_filename)
 
-    output_size = (125,125)
+    output_size = (125, 125)
     i = Image.open(form_picture)
     i.thumbnail(output_size)
     i.save(picture_path)
@@ -95,27 +96,24 @@ def account():
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
-    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    image_file = url_for('static', filename=f'profile_pics/{current_user.image_file}')
+
     return render_template('account.html', title='Account', image_file=image_file, form=form)
 
 
 ##########################HAVE COMMENTED EVERYTHING BELOW FOR THE TIME BEING#########################################
 
-@app.route("/bankdetails", methods=["POST"])
+@app.route("/bankdetails", methods=["GET", "POST"])
+@login_required
 def bank_details():
-    bank_data = json.loads(request.data.decode("UTF-8"))
-    print(bank_data["id"])
-    if "amount" in bank_data:
-        response = BankController.insert_bank_details(
-            username=bank_data["username"],
-            bank_name=bank_data["bank_name"],
-            amount=bank_data["amount"],
-        )
-    else:
-        response = BankController.insert_bank_details(
-            username=bank_data["username"], bank_name=bank_data["bank_name"]
-        )
-    return response
+    form = BankDetailsForm()
+    if form.validate_on_submit():
+        bank = BankAccount(bank_name=form.bank_name.data, amount=form.amount.data, user_id=current_user.id)
+        db.session.add(bank)
+        db.session.commit()
+        flash('Your Bank Details have been updated!', 'success')
+        return redirect(url_for('home'))
+    return render_template('bank_details.html', title='Bank Details', form=form)
 
 
 # @app.route("/categories", methods=["POST"])
@@ -156,6 +154,7 @@ def income():
 
 @app.route("/expenses", methods=["POST"])
 def expenses():
+    # sourcery skip: assign-if-exp, inline-immediately-returned-variable
     expenses_data = json.loads(request.data.decode("UTF-8"))
     assert "bank_name" in expenses_data  # TODO
     if "sub_category" in expenses_data:
@@ -182,6 +181,7 @@ def expenses():
 
 @app.route("/investments", methods=["POST"])
 def investments():
+    # sourcery skip: assign-if-exp, inline-immediately-returned-variable
     investments_data = json.loads(request.data.decode("UTF-8"))
     assert "bank_name" in investments_data  # TODO
     if "sub_category" in investments_data:
@@ -231,7 +231,7 @@ def user_bio():
 def bank_accounts():
     user_name = request.args.get("username")
     ans = GetDetails.get_bank_accounts_of_user(username=user_name)
-    return render_template('bank_accounts.html', title='Bank Accounts', body=ans)
+    return render_template('bank_details.html', title='Bank Accounts', body=ans)
 
 
 @app.route("/getdetails/income_details", methods=["GET"])

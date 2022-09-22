@@ -15,6 +15,7 @@ class Login(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
+    # bank = db.relationship('BankAccount', backref='user', lazy=True)
 
     def __repr__(self):
         return f"Login('{self.username}','{self.email}', '{self.image_file}')"
@@ -43,7 +44,7 @@ class BankAccount(db.Model):
 
 
 class ExpensesCategories(db.Model):
-    __tablename__ = 'expensescategories'
+    __tablename__ = 'expenses_categories'
     __table_args__ = {'extend_existing': True}
     expenses_category_id = db.Column(db.Integer, primary_key=True)
     expenses_category = db.Column(db.String(40), nullable=False)
@@ -54,7 +55,7 @@ class ExpensesCategories(db.Model):
 
 
 class InvestmentsCategories(db.Model):
-    __tablename__ = 'investmentscategories'
+    __tablename__ = 'investments_categories'
     __table_args__ = {'extend_existing': True}
     investments_category_id = db.Column(db.Integer, primary_key=True)
     investments_category = db.Column(db.String(40), nullable=False)
@@ -65,7 +66,7 @@ class InvestmentsCategories(db.Model):
 
 
 class IncomeCategories(db.Model):
-    __tablename__ = 'incomecategories'
+    __tablename__ = 'income_categories'
     __table_args__ = {'extend_existing': True}
     income_category_id = db.Column(db.Integer, primary_key=True)
     income_category = db.Column(db.String(40), nullable=False)
@@ -80,7 +81,7 @@ class Expenses(db.Model):
     expenses_id = db.Column(db.Integer, primary_key=True)
     bank_name = db.Column(db.String(20), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('login.id'), nullable=False)
-    expenses_category_id = db.Column(db.String(40), db.ForeignKey('expensescategories.expenses_category_id'),
+    expenses_category_id = db.Column(db.String(40), db.ForeignKey('expenses_categories.expenses_category_id'),
                                      nullable=False)
     amount = db.Column(db.Integer, nullable=False)
     date = db.Column(db.Date, nullable=False, default=datetime.utcnow)
@@ -95,7 +96,7 @@ class Investments(db.Model):
     investments_id = db.Column(db.Integer, primary_key=True)
     bank_name = db.Column(db.String(20), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('login.id'), nullable=False)
-    investments_category_id = db.Column(db.String(40), db.ForeignKey('investmentscategories.investments_category_id'),
+    investments_category_id = db.Column(db.String(40), db.ForeignKey('investments_categories.investments_category_id'),
                                         nullable=False)
     amount = db.Column(db.Integer, nullable=False)
     date = db.Column(db.Date, nullable=False, default=datetime.utcnow)
@@ -110,7 +111,7 @@ class Income(db.Model):
     income_id = db.Column(db.Integer, primary_key=True)
     bank_name = db.Column(db.String(20), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('login.id'), nullable=False)
-    income_category_id = db.Column(db.String(40), db.ForeignKey('incomecategories.income_category_id'), nullable=False)
+    income_category_id = db.Column(db.String(40), db.ForeignKey('income_categories.income_category_id'), nullable=False)
     amount = db.Column(db.Integer, nullable=False)
     date = db.Column(db.Date, nullable=False, default=datetime.utcnow)
     description = db.Column(db.Text, nullable=False)
@@ -121,9 +122,10 @@ class Income(db.Model):
 
 # db.create_all()
 
-
 if __name__ == '__main__':
     # user_1 = User(name = 'Vijay Kishore', phone_number = '9876543210')
     # db.session.add(user_1)
     # db.session.commit()
-    print(Login.query.all())
+    current_user = Login.query.filter_by(username='vkv').first()
+    print(current_user.id)
+

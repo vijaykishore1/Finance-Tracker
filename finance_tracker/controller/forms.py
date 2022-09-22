@@ -52,3 +52,9 @@ class UpdateAccountForm(FlaskForm):
             user = Login.query.filter_by(email=email.data).first()
             if user:
                 raise ValidationError('That Email is taken. Please choose a new one')
+
+
+class BankDetailsForm(FlaskForm):
+    bank_name = StringField('Bank Name', validators=[DataRequired(), Length(min=2, max=20)])
+    amount = StringField('Bank Balance')
+    submit = SubmitField('Update Bank Details')
