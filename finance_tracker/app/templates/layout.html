@@ -11,9 +11,9 @@
     <link rel="stylesheet" type = "text/css" href="{{ url_for('static', filename = 'main.css') }}">
 
     {% if title %}
-        <title>Expense Manager - {{ title }}</title>
+        <title>Finance Tracker - {{ title }}</title>
     {% else %}
-        <title>Expense Manager</title>
+        <title>Finance Tracker</title>
     {% endif %}
 </head>
 <body>
@@ -26,13 +26,20 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
-              <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
+                {% if current_user.is_authenticated %}
+                    <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
+                    <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
+                {% else %}
+                    <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
+                {% endif %}
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
                 {% if current_user.is_authenticated %}
                     <a class="nav-item nav-link" href="{{ url_for('bank_details') }}">Bank Details</a>
+                    <a class="nav-item nav-link" href="{{ url_for('income_details') }}">Income Details</a>
+                    <a class="nav-item nav-link" href="{{ url_for('expenses_details') }}">Expenses Details</a>
+                    <a class="nav-item nav-link" href="{{ url_for('investments_details') }}">Investments Details</a>
                     <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
                     <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
                 {% else %}

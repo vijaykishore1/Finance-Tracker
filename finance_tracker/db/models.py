@@ -126,6 +126,8 @@ if __name__ == '__main__':
     # user_1 = User(name = 'Vijay Kishore', phone_number = '9876543210')
     # db.session.add(user_1)
     # db.session.commit()
-    current_user = Login.query.filter_by(username='vkv').first()
-    print(current_user.id)
+    banks = BankAccount.query.filter_by(bank_name='HDFC').first()
+    # banks.amount = 100000
+    # db.session.commit()
+    print(banks)
 
