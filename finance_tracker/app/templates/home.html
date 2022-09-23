@@ -1,5 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>Home Page</h1>
+    <h2>Your Bank Details</h2>
+    {% for bank in banks %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <h4 class="text-muted">{{ bank.bank_name }}</h4>
+            </div>
+            <h4 class="article-content">{{ bank.amount }}</h4>
+          </div>
+        </article>
+    {% endfor %}
 {% endblock content %}
 

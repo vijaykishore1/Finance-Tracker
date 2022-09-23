@@ -4,7 +4,8 @@ from PIL import Image
 from flask import request, render_template, url_for, flash, redirect
 from flask_login import login_user, current_user, logout_user, login_required
 from finance_tracker.app import app, db, bcrypt
-from finance_tracker.controller.forms import RegistrationForm, LoginForm, UpdateAccountForm, BankDetailsForm
+from finance_tracker.controller.forms import RegistrationForm, LoginForm, UpdateAccountForm, BankDetailsForm, \
+    IncomeForm, ExpensesForm, InvestmentsForm
 from finance_tracker.controller.bank_controller import BankController
 from finance_tracker.controller.income_controller import IncomeController
 from finance_tracker.controller.expenses_controller import ExpensesController
@@ -18,9 +19,10 @@ import json
 
 @app.route("/")
 @app.route("/home")
+@login_required
 def home():
-    bank = BankAccount.query.all()
-    return render_template('home.html', bank=bank)
+    banks = BankAccount.query.filter_by(user_id=current_user.id).all()
+    return render_template('home.html', banks=banks)
 
 
 @app.route("/about")
@@ -116,147 +118,161 @@ def bank_details():
     return render_template('bank_details.html', title='Bank Details', form=form)
 
 
-# @app.route("/categories", methods=["POST"])
-# def category():
-#     category_data = json.loads(request.data.decode("UTF-8"))
-#     assert "category" in category_data  # TODO
-#     response = CategoriesController().insert_category_details(
-#         category=category_data["category"], sub_category=category_data["sub_category"]
-#     )
-#     return response
-
-
-@app.route("/income", methods=["POST"])
-def income():
-    income_data = json.loads(request.data.decode("UTF-8"))
-    assert "bank_name" in income_data  # TODO
-    if "sub_category" in income_data:
-        response = IncomeController().insert_income_details(
-            bank_name=income_data["bank_name"],
-            username=income_data["username"],
-            category=income_data["category"],
-            sub_category=income_data["sub_category"],
-            amount=income_data["amount"],
-            date=income_data["date"],
-            description=income_data["description"],
-        )
-    else:
-        response = IncomeController().insert_income_details(
-            bank_name=income_data["bank_name"],
-            username=income_data["username"],
-            category=income_data["category"],
-            amount=income_data["amount"],
-            date=income_data["date"],
-            description=income_data["description"],
-        )
-    return response
-
-
-@app.route("/expenses", methods=["POST"])
-def expenses():
-    # sourcery skip: assign-if-exp, inline-immediately-returned-variable
-    expenses_data = json.loads(request.data.decode("UTF-8"))
-    assert "bank_name" in expenses_data  # TODO
-    if "sub_category" in expenses_data:
-        response = ExpensesController().insert_expenses_details(
-            bank_name=expenses_data["bank_name"],
-            username=expenses_data["username"],
-            category=expenses_data["category"],
-            sub_category=expenses_data["sub_category"],
-            amount=expenses_data["amount"],
-            date=expenses_data["date"],
-            description=expenses_data["description"],
-        )
-    else:
-        response = ExpensesController().insert_expenses_details(
-            bank_name=expenses_data["bank_name"],
-            username=expenses_data["username"],
-            category=expenses_data["category"],
-            amount=expenses_data["amount"],
-            date=expenses_data["date"],
-            description=expenses_data["description"],
-        )
-    return response
-
-
-@app.route("/investments", methods=["POST"])
-def investments():
-    # sourcery skip: assign-if-exp, inline-immediately-returned-variable
-    investments_data = json.loads(request.data.decode("UTF-8"))
-    assert "bank_name" in investments_data  # TODO
-    if "sub_category" in investments_data:
-        response = InvestmentsController().insert_investments_details(
-            bank_name=investments_data["bank_name"],
-            username=investments_data["username"],
-            category=investments_data["category"],
-            sub_category=investments_data["sub_category"],
-            amount=investments_data["amount"],
-            date=investments_data["date"],
-            description=investments_data["description"],
-        )
-    else:
-        response = InvestmentsController().insert_investments_details(
-            bank_name=investments_data["bank_name"],
-            username=investments_data["username"],
-            category=investments_data["category"],
-            amount=investments_data["amount"],
-            date=investments_data["date"],
-            description=investments_data["description"],
-        )
-    return response
-
-
-@app.route("/getdetails/balance", methods=["GET"])
-def balance():
-    user_name = request.args.get("username")
-    ans = GetDetails.get_balance_of_user(username=user_name)
-    return render_template('balance.html', title='Balance', body=ans)
-
-
-@app.route("/getdetails/logindetails", methods=["GET"])
-def logindetails():
-    user_name = request.args.get("username")
-    ans = GetDetails.get_login_details_of_user(username=user_name)
-    return render_template('logindetails.html', title='Login Details', body=ans)
-
-
-@app.route("/getdetails/user_bio", methods=["GET"])
-def user_bio():
-    user_name = request.args.get("username")
-    ans = GetDetails.get_bio_of_user(username=user_name)
-    return render_template('user_bio.html', title='User Details', body=ans)
-
-
-@app.route("/getdetails/bank_accounts", methods=["GET"])
-def bank_accounts():
-    user_name = request.args.get("username")
-    ans = GetDetails.get_bank_accounts_of_user(username=user_name)
-    return render_template('bank_details.html', title='Bank Accounts', body=ans)
-
-
-@app.route("/getdetails/income_details", methods=["GET"])
+@app.route("/incomedetails", methods=["GET", "POST"])
+@login_required
 def income_details():
-    user_name = request.args.get("username")
-    ans = GetDetails.get_income_details_of_user(username=user_name)
-    return render_template('income_details.html', title='Income Details', body=ans)
+    form = IncomeForm()
+    if form.validate_on_submit():
+        income_category_id_query = IncomeCategories.query.filter(
+            IncomeCategories.income_category == form.income_category.data,
+            IncomeCategories.income_sub_category == form.income_sub_category.data).first()
+        if not income_category_id_query:
+            incomecategory = IncomeCategories(income_category=form.income_category.data,
+                                              income_sub_category=form.income_sub_category.data)
+            db.session.add(incomecategory)
+            db.session.commit()
+            income_category_id_query = IncomeCategories.query.filter(
+                IncomeCategories.income_category == form.income_category.data,
+                IncomeCategories.income_sub_category == form.income_sub_category.data).first()
+
+        existing_balance = BankAccount.query.filter(BankAccount.user_id == current_user.id,
+                                                    BankAccount.bank_name == form.bank_name.data).first()
+        income = Income(bank_name=form.bank_name.data, amount=form.amount.data,
+                        user_id=current_user.id, income_category_id=income_category_id_query.income_category_id,
+                        date=form.date.data, description=form.description.data)
+        db.session.add(income)
+        db.session.commit()
+        income_bank_details = BankAccount.query.filter(BankAccount.user_id == current_user.id).first()
+        income_bank_details.amount = existing_balance.amount + form.amount.data
+        db.session.commit()
+
+        flash('Your Income Details have been updated!', 'success')
+        return redirect(url_for('home'))
+    return render_template('income_details.html', title='Income Details', form=form)
 
 
-@app.route("/getdetails/expenses_details", methods=["GET"])
+@app.route("/expensesdetails", methods=["GET", "POST"])
+@login_required
 def expenses_details():
-    user_name = request.args.get("username")
-    ans = GetDetails.get_expenses_details_of_user(username=user_name)
-    return render_template('expenses_details.html', title='Expenses Details', body=ans)
+    form = ExpensesForm()
+    if form.validate_on_submit():
+        expenses_category_id_query = ExpensesCategories.query.filter(
+            ExpensesCategories.expenses_category == form.expenses_category.data,
+            ExpensesCategories.expenses_sub_category == form.expenses_sub_category.data).first()
+        if not expenses_category_id_query:
+            expensescategory = ExpensesCategories(expenses_category=form.expenses_category.data,
+                                                  expenses_sub_category=form.expenses_sub_category.data)
+            db.session.add(expensescategory)
+            db.session.commit()
+            expenses_category_id_query = ExpensesCategories.query.filter(
+                ExpensesCategories.expenses_category == form.expenses_category.data,
+                ExpensesCategories.expenses_sub_category == form.expenses_sub_category.data).first()
+
+        existing_balance = BankAccount.query.filter(BankAccount.user_id == current_user.id,
+                                                    BankAccount.bank_name == form.bank_name.data).first()
+        expenses = Expenses(bank_name=form.bank_name.data, amount=form.amount.data,
+                            user_id=current_user.id,
+                            expenses_category_id=expenses_category_id_query.expenses_category_id,
+                            date=form.date.data, description=form.description.data)
+        db.session.add(expenses)
+        db.session.commit()
+        expenses_bank_details = BankAccount.query.filter(BankAccount.user_id == current_user.id).first()
+        expenses_bank_details.amount = existing_balance.amount - form.amount.data
+        db.session.commit()
+
+        flash('Your Expense Details have been updated!', 'success')
+        return redirect(url_for('home'))
+    return render_template('expenses_details.html', title='Expense Details', form=form)
 
 
-@app.route("/getdetails/investments_details", methods=["GET"])
+@app.route("/investmentsdetails", methods=["GET", "POST"])
+@login_required
 def investments_details():
-    user_name = request.args.get("username")
-    ans = GetDetails.get_investments_details_of_user(username=user_name)
-    return render_template('investments_details.html', title='Investments Details', body=ans)
+    form = InvestmentsForm()
+    if form.validate_on_submit():
+        investments_category_id_query = InvestmentsCategories.query.filter(
+            InvestmentsCategories.investments_category == form.investments_category.data,
+            InvestmentsCategories.investments_sub_category == form.investments_sub_category.data).first()
+        if not investments_category_id_query:
+            investmentscategory = InvestmentsCategories(investments_category=form.investments_category.data,
+                                                        investments_sub_category=form.investments_sub_category.data)
+            db.session.add(investmentscategory)
+            db.session.commit()
+            investments_category_id_query = InvestmentsCategories.query.filter(
+                InvestmentsCategories.investments_category == form.investments_category.data,
+                InvestmentsCategories.investments_sub_category == form.investments_sub_category.data).first()
+
+        existing_balance = BankAccount.query.filter(BankAccount.user_id == current_user.id,
+                                                    BankAccount.bank_name == form.bank_name.data).first()
+        investments = Investments(bank_name=form.bank_name.data, amount=form.amount.data,
+                                  user_id=current_user.id,
+                                  investments_category_id=investments_category_id_query.investments_category_id,
+                                  date=form.date.data, description=form.description.data)
+        db.session.add(investments)
+        db.session.commit()
+        investments_bank_details = BankAccount.query.filter(BankAccount.user_id == current_user.id).first()
+        investments_bank_details.amount = existing_balance.amount - form.amount.data
+        db.session.commit()
+
+        flash('Your Investment Details have been updated!', 'success')
+        return redirect(url_for('home'))
+    return render_template('investments_details.html', title='Investment Details', form=form)
 
 
-@app.route("/getdetails/all", methods=["GET"])
-def all_details():
-    user_name = request.args.get("username")
-    ans = GetDetails.get_all_details_of_user(username=user_name)
-    return render_template('all_details.html', title='All Details', body=ans)
+##########################HAVE COMMENTED EVERYTHING BELOW FOR THE TIME BEING#########################################
+
+
+# @app.route("/getdetails/balance", methods=["GET"])
+# def balance():
+#     user_name = request.args.get("username")
+#     ans = GetDetails.get_balance_of_user(username=user_name)
+#     return render_template('balance.html', title='Balance', body=ans)
+#
+#
+# @app.route("/getdetails/logindetails", methods=["GET"])
+# def logindetails():
+#     user_name = request.args.get("username")
+#     ans = GetDetails.get_login_details_of_user(username=user_name)
+#     return render_template('logindetails.html', title='Login Details', body=ans)
+#
+#
+# @app.route("/getdetails/user_bio", methods=["GET"])
+# def user_bio():
+#     user_name = request.args.get("username")
+#     ans = GetDetails.get_bio_of_user(username=user_name)
+#     return render_template('user_bio.html', title='User Details', body=ans)
+#
+#
+# @app.route("/getdetails/bank_accounts", methods=["GET"])
+# def bank_accounts():
+#     user_name = request.args.get("username")
+#     ans = GetDetails.get_bank_accounts_of_user(username=user_name)
+#     return render_template('bank_details.html', title='Bank Accounts', body=ans)
+#
+#
+# @app.route("/getdetails/income_details", methods=["GET"])
+# def income_details():
+#     user_name = request.args.get("username")
+#     ans = GetDetails.get_income_details_of_user(username=user_name)
+#     return render_template('income_details.html', title='Income Details', body=ans)
+#
+#
+# @app.route("/getdetails/expenses_details", methods=["GET"])
+# def expenses_details():
+#     user_name = request.args.get("username")
+#     ans = GetDetails.get_expenses_details_of_user(username=user_name)
+#     return render_template('expenses_details.html', title='Expenses Details', body=ans)
+#
+#
+# @app.route("/getdetails/investments_details", methods=["GET"])
+# def investments_details():
+#     user_name = request.args.get("username")
+#     ans = GetDetails.get_investments_details_of_user(username=user_name)
+#     return render_template('investments_details.html', title='Investments Details', body=ans)
+#
+#
+# @app.route("/getdetails/all", methods=["GET"])
+# def all_details():
+#     user_name = request.args.get("username")
+#     ans = GetDetails.get_all_details_of_user(username=user_name)
+#     return render_template('all_details.html', title='All Details', body=ans)
